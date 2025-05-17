@@ -7,6 +7,12 @@ Diese App simuliert ein sicheres Aktien-Dashboard für die Persona **Klaus Meier
 - Datenpersistenz via Local Storage
 - Strukturierte Darstellung im Sinne der Persona
 
+## Used Technologies
+- Vite
+- Chart.js
+- TypeScript
+
+
 ## Setup
 ```bash
 npm run dev

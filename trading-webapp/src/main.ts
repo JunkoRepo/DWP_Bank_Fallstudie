@@ -9,6 +9,8 @@ interface Bond {
   anlagerisiko: string;
   datum_naechste_hauptversammlung: string;
   emittent: string;
+
+  history?: number[]; // simulated proce history // was ist das Fragezeichen
 }
 
 let currentSort: {
@@ -21,6 +23,22 @@ let currentSort: {
 
 let savedValues: Bond[] = [];
 
+function generatePriceHistory(currentPrice: number, days: number = 30): number[] {
+  const history: number[] = [];
+
+  let price = currentPrice;
+
+  for (let i = 0; i < days; i++) {
+    // simulate daily price change between -2% and +2%
+    const changePercent = (Math.random() * 4 - 2) / 100;
+    price = +(price * (1 + changePercent)).toFixed(2); // round to 2 decimals
+    history.unshift(price); // prepend so most recent is last
+  }
+
+  return history;
+}
+
+
 // Daten aus localStorage oder von JSON laden
 // TODO: Favoriten hier speichern
 async function loadBonds(): Promise<Bond[]> {
@@ -32,6 +50,13 @@ async function loadBonds(): Promise<Bond[]> {
     const res = await fetch("/data.json");
     const data = await res.json();
     localStorage.setItem("bonds", JSON.stringify(data));
+
+
+    // Simulate price history for each bond
+    data.forEach((bond: Bond) => {
+      bond.history = generatePriceHistory(bond.kurs);
+    });
+
     return data;
   }
 }
