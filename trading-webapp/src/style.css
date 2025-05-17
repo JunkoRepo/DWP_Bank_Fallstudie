@@ -28,11 +28,54 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+
+  font-family: system-ui, sans-serif;
+  background-color: #f9f9f9;
+  color: #222;
+  margin: 0;
+  padding: 2rem;
+  line-height: 1.6;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #003366;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background-color: #e6f0ff;
+  color: #003366;
+  font-weight: 600;
+}
+
+tr:hover {
+  background-color: #f2f6fa;
+}
+
+@media (max-width: 600px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+  th, td {
+    padding: 0.5rem 1rem;
+  }
 }
 
 #app {
