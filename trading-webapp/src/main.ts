@@ -1,4 +1,6 @@
 import './style.css';
+import { renderBondChart } from './chart';
+
 
 interface Bond {
   wkn: string;
@@ -10,7 +12,7 @@ interface Bond {
   datum_naechste_hauptversammlung: string;
   emittent: string;
 
-  history?: number[]; // simulated proce history // was ist das Fragezeichen
+  history?: number[]; // simulated proce history
 }
 
 let currentSort: {
@@ -45,21 +47,27 @@ async function loadBonds(): Promise<Bond[]> {
   const savedData = localStorage.getItem("bonds");
 
   if (savedData) {
-    return JSON.parse(savedData);
+    const parsed: Bond[] = JSON.parse(savedData);
+    parsed.forEach((bond) => {
+      if (!bond.history) {
+        bond.history = generatePriceHistory(bond.kurs);
+      }
+    });
+    return parsed;
   } else {
     const res = await fetch("/data.json");
-    const data = await res.json();
-    localStorage.setItem("bonds", JSON.stringify(data));
+    const data: Bond[] = await res.json();
 
-
-    // Simulate price history for each bond
-    data.forEach((bond: Bond) => {
+    // Generate history before saving to localStorage
+    data.forEach((bond) => {
       bond.history = generatePriceHistory(bond.kurs);
     });
 
+    localStorage.setItem("bonds", JSON.stringify(data));
     return data;
   }
 }
+
 
 function sortData(data: Bond[], col: keyof Bond): Bond[] {
   const neueRichtung =
@@ -99,30 +107,39 @@ function displayBonds(bonds: Bond[]) {
   };
 
   container.innerHTML = `
-    <h1>Wertpapiere</h1>
-    <table>
-      <thead>
+  <h1>Wertpapiere</h1>
+  <table>
+    <thead>
+      <tr>
+        ${header("name", "Name")}
+        ${header("typ", "Typ")}
+        ${header("kurs", "Kurs")}
+        ${header("anlagerisiko", "Risiko")}
+        ${header("emittent", "Emittent")}
+      </tr>
+    </thead>
+    <tbody>
+      ${bonds
+        .map(
+          (bond, i) => `
         <tr>
-          ${header("name", "Name")}
-          ${header("typ", "Typ")}
-          ${header("kurs", "Kurs")}
-          ${header("anlagerisiko", "Risiko")}
-          ${header("emittent", "Emittent")}
+          <td>${bond.name}</td>
+          <td>${bond.typ}</td>
+          <td>${bond.kurs} €</td>
+          <td>${bond.anlagerisiko}</td>
+          <td>${bond.emittent}</td>
         </tr>
-      </thead>
-      <tbody>
-        ${bonds.map(w => `
-          <tr>
-            <td>${w.name}</td>
-            <td>${w.typ}</td>
-            <td>${w.kurs} €</td>
-            <td>${w.anlagerisiko}</td>
-            <td>${w.emittent}</td>
-          </tr>
-        `).join('')}
-      </tbody>
-    </table>
-  `;
+        <tr>
+          <td colspan="5">
+            <canvas id="chart-${i}" height="200"></canvas>
+          </td>
+        </tr>
+      `
+        )
+        .join('')}
+    </tbody>
+  </table>
+`;
 
   // Event Listener für Header
   container.querySelectorAll("th[data-col]").forEach(th => {
@@ -132,6 +149,17 @@ function displayBonds(bonds: Bond[]) {
       displayBonds(sorted);
     });
   });
+
+  
+  // Render charts for each bond
+  bonds.forEach((bond, i) => {
+    console.log(`Rendering chart for ${bond.name}`, bond.history); // 👈 Add this
+    if (bond.history) {
+      renderBondChart(`chart-${i}`, bond.name, bond.history);
+    }
+  });
+  
+
 }
 
 loadBonds().then(data => {
