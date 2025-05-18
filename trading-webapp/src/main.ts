@@ -126,7 +126,7 @@ function displayBonds(bonds: Bond[]) {
       ${bonds
         .map(
           (bond, i) => `
-        <tr>
+        <tr class="bond-row pointer" data-wkn="${bond.wkn}">
           <td>${bond.name}</td>
           <td>${bond.typ}</td>
           <td>
@@ -149,10 +149,10 @@ function displayBonds(bonds: Bond[]) {
             bond.favorit ? "svg anzeigen" : "svg nicht anzeigen"
           }</td> 
         </tr>
-        <tr>
-          <td colspan="5">
-            <canvas id="chart-${i}" height="200"></canvas>
-          </td>
+        <tr class="chart-row hidden" data-wkn="${bond.wkn}">
+            <td  colspan="5">
+              <canvas id="chart-${i}" height="200"></canvas>
+            </td>
         </tr>
       `
         )
@@ -170,7 +170,7 @@ function displayBonds(bonds: Bond[]) {
     });
   });
 
-  // Event Listener für Favorite
+  // Event Listener for Favorite
   container.querySelectorAll(".favorite-toggle").forEach((td) => {
     td.addEventListener("click", () => {
       const wkn = (td as HTMLElement).dataset.wkn;
@@ -180,6 +180,26 @@ function displayBonds(bonds: Bond[]) {
 
         // Update the content of this cell only
         td.innerHTML = bond.favorit ? "svg anzeigen" : "svg nicht anzeigen";
+      }
+    });
+  });
+
+  // Event Listener for Drop-Down
+  container.querySelectorAll(".bond-row").forEach((row) => {
+    row.addEventListener("click", () => {
+      console.log("Clicked bond row", row);
+      const wkn = (row as HTMLElement).dataset.wkn;
+      const chartRow = container.querySelector(`.chart-row[data-wkn="${wkn}"]`);
+      const bond = savedValues.find((b) => b.wkn === wkn);
+      const canvas = chartRow?.querySelector("canvas");
+
+      if (!chartRow || !canvas || !bond?.history) return;
+
+      const isHidden = chartRow.classList.contains("hidden");
+      chartRow.classList.toggle("hidden");
+
+      if (isHidden) {
+        renderBondChart(canvas.id, bond.name, bond.history);
       }
     });
   });

@@ -78,6 +78,14 @@ tr:hover {
   }
 }
 
+.pointer{
+  cursor: pointer;
+}
+
+.hidden{
+  display: none;
+}
+
 #app {
   max-width: 1280px;
   margin: 0 auto;

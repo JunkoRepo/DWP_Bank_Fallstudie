@@ -10,6 +10,8 @@ import {
     Filler,
     } from 'chart.js';
 
+    const chartInstances: Record<string, Chart> = {};
+
     Chart.register(
         LineController,
         LineElement,
@@ -29,7 +31,11 @@ export function renderBondChart(canvasId: string, label: string, data: number[])
 
     const avg = data.reduce((sum, val) => sum + val, 0) / data.length;
 
-    new Chart(canvas, {
+    if (chartInstances[canvasId]) {
+        chartInstances[canvasId].destroy();
+    }
+
+    const chart = new Chart(canvas, {
         type: 'line',
         data: {
             labels: data.map((_, i) => {
@@ -79,7 +85,7 @@ export function renderBondChart(canvasId: string, label: string, data: number[])
                     const value = context.parsed.y.toFixed(2);
                     return `Preis: ${value} €`;
                 },
-                footer: (tooltipItems) => {
+                footer: () => {
                     const avgValue = avg.toFixed(2);
                     return `Durchschnitt: ${avgValue} €`;
                 }
@@ -108,4 +114,5 @@ export function renderBondChart(canvasId: string, label: string, data: number[])
             }
         }
         });
+    chartInstances[canvasId] = chart;
 }
