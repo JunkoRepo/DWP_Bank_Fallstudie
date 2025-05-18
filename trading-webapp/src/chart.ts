@@ -17,6 +17,8 @@ import {
       console.warn(`Canvas with ID "${canvasId}" not found.`);
       return;
     }
+
+
   
     new Chart(canvas, {
       type: 'line',
@@ -29,7 +31,7 @@ import {
             borderColor: 'blue',
             backgroundColor: 'rgba(0, 0, 255, 0.1)',
             fill: true,
-            tension: 0.3
+            tension: 0.0
           }
         ]
       },

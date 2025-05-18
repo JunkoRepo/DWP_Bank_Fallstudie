@@ -11,8 +11,8 @@ interface Bond {
   anlagerisiko: string;
   datum_naechste_hauptversammlung: string;
   emittent: string;
-
   history?: number[]; // simulated proce history
+  favorit?: boolean;
 }
 
 let currentSort: {
@@ -116,6 +116,7 @@ function displayBonds(bonds: Bond[]) {
         ${header("kurs", "Kurs")}
         ${header("anlagerisiko", "Risiko")}
         ${header("emittent", "Emittent")}
+        ${header("favorit", "Favorit")}
       </tr>
     </thead>
     <tbody>
@@ -125,9 +126,23 @@ function displayBonds(bonds: Bond[]) {
         <tr>
           <td>${bond.name}</td>
           <td>${bond.typ}</td>
-          <td>${bond.kurs} €</td>
+          <td>
+            ${bond.kurs} €
+            ${bond.history && bond.history.length >= 2
+              ? (() => {
+                  const prev = bond.history[bond.history.length - 2];
+                  const curr = bond.history[bond.history.length - 1];
+                  const diff = +(curr - prev).toFixed(2);
+                  const color = diff >= 0 ? 'green' : 'red';
+                  const sign = diff >= 0 ? '+' : '';
+                  return `<span style="color:${color}; margin-left:6px;">${sign}${diff} €</span>`;
+                })()
+              : ''}
+          </td>
+
           <td>${bond.anlagerisiko}</td>
           <td>${bond.emittent}</td>
+          <td>${bond.favorit}</td>
         </tr>
         <tr>
           <td colspan="5">
@@ -153,7 +168,7 @@ function displayBonds(bonds: Bond[]) {
   
   // Render charts for each bond
   bonds.forEach((bond, i) => {
-    console.log(`Rendering chart for ${bond.name}`, bond.history); // 👈 Add this
+    console.log(`Rendering chart for ${bond.name}`, bond.history);
     if (bond.history) {
       renderBondChart(`chart-${i}`, bond.name, bond.history);
     }
@@ -162,6 +177,9 @@ function displayBonds(bonds: Bond[]) {
 
 }
 
+export function init() {
+
+}
 loadBonds().then(data => {
   savedValues = data;
   displayBonds(data);
