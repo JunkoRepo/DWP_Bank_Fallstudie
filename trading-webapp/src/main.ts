@@ -19,8 +19,8 @@ let currentSort: {
   col: keyof Bond | null;
   direction: 'asc' | 'desc';
 } = {
-  col: null,
-  direction: 'asc'
+  col: 'name',
+  direction: 'desc'
 };
 
 let savedValues: Bond[] = [];
@@ -107,7 +107,7 @@ function displayBonds(bonds: Bond[]) {
   };
 
   container.innerHTML = `
-  <h1>Wertpapiere</h1>
+  <h1>TRADING Inc.</h1>
   <table>
     <thead>
       <tr>
@@ -127,7 +127,7 @@ function displayBonds(bonds: Bond[]) {
           <td>${bond.name}</td>
           <td>${bond.typ}</td>
           <td>
-            ${bond.kurs} €
+            ${bond.kurs.toFixed(2)} €
             ${bond.history && bond.history.length >= 2
               ? (() => {
                   const prev = bond.history[bond.history.length - 2];
@@ -181,6 +181,7 @@ export function init() {
 
 }
 loadBonds().then(data => {
-  savedValues = data;
+  // savedValues = data;
+  savedValues = sortData(data, currentSort.col!);  // Force sort on default column
   displayBonds(data);
 });
