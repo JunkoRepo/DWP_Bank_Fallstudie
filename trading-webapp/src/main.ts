@@ -69,22 +69,25 @@ async function loadBonds(): Promise<Bond[]> {
 }
 
 
-function sortData(data: Bond[], col: keyof Bond): Bond[] {
-  const neueRichtung =
-    currentSort.col === col && currentSort.direction === 'asc'
-      ? 'desc'
-      : 'asc';
+function sortData(data: Bond[], col: keyof Bond, preserveDirection: boolean = false): Bond[] {
+  let neueRichtung: "asc" | "desc";
 
-  currentSort = { col, direction: neueRichtung };
+  if (preserveDirection && currentSort.col === col) {
+    neueRichtung = currentSort.direction;
+  } else {
+    neueRichtung =
+      currentSort.col === col && currentSort.direction === "asc" ? "desc" : "asc";
+    currentSort = { col, direction: neueRichtung };
+  }
 
   return [...data].sort((a, b) => {
     const aWert = a[col];
     const bWert = b[col];
 
-    if (typeof aWert === 'number' && typeof bWert === 'number') {
-      return neueRichtung === 'asc' ? aWert - bWert : bWert - aWert;
+    if (typeof aWert === "number" && typeof bWert === "number") {
+      return neueRichtung === "asc" ? aWert - bWert : bWert - aWert;
     } else {
-      return neueRichtung === 'asc'
+      return neueRichtung === "asc"
         ? String(aWert).localeCompare(String(bWert))
         : String(bWert).localeCompare(String(aWert));
     }
@@ -142,7 +145,9 @@ function displayBonds(bonds: Bond[]) {
 
           <td>${bond.anlagerisiko}</td>
           <td>${bond.emittent}</td>
-          <td>${bond.favorit}</td>
+          <td class="favorite-toggle" data-wkn="${bond.wkn}">${
+            bond.favorit ? "svg anzeigen" : "svg nicht anzeigen"
+          }</td> 
         </tr>
         <tr>
           <td colspan="5">
@@ -165,6 +170,20 @@ function displayBonds(bonds: Bond[]) {
     });
   });
 
+  // Event Listener für Favorite
+  container.querySelectorAll(".favorite-toggle").forEach((td) => {
+    td.addEventListener("click", () => {
+      const wkn = (td as HTMLElement).dataset.wkn;
+      const bond = savedValues.find((b) => b.wkn === wkn);
+      if (bond) {
+        updateFavorite(bond);
+
+        // Update the content of this cell only
+        td.innerHTML = bond.favorit ? "svg anzeigen" : "svg nicht anzeigen";
+      }
+    });
+  });
+
   
   // Render charts for each bond
   bonds.forEach((bond, i) => {
@@ -173,13 +192,20 @@ function displayBonds(bonds: Bond[]) {
       renderBondChart(`chart-${i}`, bond.name, bond.history);
     }
   });
-  
-
 }
 
-export function init() {
-
+export function updateFavorite(bond: Bond) {
+  const index = savedValues.findIndex((b) => b.wkn === bond.wkn);
+  if (index !== -1) {
+    savedValues[index].favorit = !savedValues[index].favorit;
+    localStorage.setItem("bonds", JSON.stringify(savedValues));
+  }
+  if (currentSort.col === "favorit") {
+    savedValues = sortData(savedValues, currentSort.col, true);
+    displayBonds(savedValues); // re-render all to show updated position
+  }
 }
+
 loadBonds().then(data => {
   // savedValues = data;
   savedValues = sortData(data, currentSort.col!);  // Force sort on default column
