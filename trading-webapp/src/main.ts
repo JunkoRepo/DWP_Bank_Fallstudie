@@ -11,6 +11,7 @@ interface Bond {
   anlagerisiko: string;
   datum_naechste_hauptversammlung: string;
   emittent: string;
+  beschreibung: string;
   history?: number[]; // simulated proce history
   favorit?: boolean;
 }
@@ -70,14 +71,14 @@ async function loadBonds(): Promise<Bond[]> {
 
 
 function sortData(data: Bond[], col: keyof Bond, preserveDirection: boolean = false): Bond[] {
-  let neueRichtung: "asc" | "desc";
+  let newDirection: "asc" | "desc";
 
   if (preserveDirection && currentSort.col === col) {
-    neueRichtung = currentSort.direction;
+    newDirection = currentSort.direction;
   } else {
-    neueRichtung =
+    newDirection =
       currentSort.col === col && currentSort.direction === "asc" ? "desc" : "asc";
-    currentSort = { col, direction: neueRichtung };
+    currentSort = { col, direction: newDirection };
   }
 
   return [...data].sort((a, b) => {
@@ -85,9 +86,9 @@ function sortData(data: Bond[], col: keyof Bond, preserveDirection: boolean = fa
     const bWert = b[col];
 
     if (typeof aWert === "number" && typeof bWert === "number") {
-      return neueRichtung === "asc" ? aWert - bWert : bWert - aWert;
+      return newDirection === "asc" ? aWert - bWert : bWert - aWert;
     } else {
-      return neueRichtung === "asc"
+      return newDirection === "asc"
         ? String(aWert).localeCompare(String(bWert))
         : String(bWert).localeCompare(String(aWert));
     }
@@ -156,10 +157,28 @@ function displayBonds(bonds: Bond[]) {
           }</td> 
         </tr>
         <tr class="chart-row hidden" data-wkn="${bond.wkn}">
-            <td  colspan="5">
-              <canvas id="chart-${i}" height="200"></canvas>
-            </td>
+          <td colspan="6">
+            <div class="chart-details">
+              <div class="chart-container">
+                <canvas id="chart-${i}" height="200"></canvas>
+              </div>
+                <div class="bond-card">
+                  <div class="bond-header">
+                    <h3>${bond.name}</h3>
+                    <span class="bond-risk ${bond.anlagerisiko.toLowerCase()}">${bond.anlagerisiko}-Risiko</span>
+                  </div>
+                  <div class="bond-details">
+                    <p><strong>WKN:</strong> ${bond.wkn}</p>
+                    <p><strong>ISIN:</strong> ${bond.isin}</p>
+                    <p><strong>Hauptversammlung:</strong> ${bond.datum_naechste_hauptversammlung}</p>
+                    <p class="bond-description">${bond.beschreibung ?? "Keine Beschreibung verfügbar."}</p>
+                  </div>
+                  <button class="info-button" data-wkn="${bond.wkn}">Transaktion beauftragen</button>
+                </div>
+            </div>
+          </td>
         </tr>
+
       `
         )
         .join('')}
@@ -176,6 +195,32 @@ function displayBonds(bonds: Bond[]) {
     });
   });
 
+  // Event Listener Button
+  const buttons = document.querySelectorAll('.info-button');
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const bondCard = button.closest('.bond-card');
+      const wkn = button.getAttribute('data-wkn');
+
+      // Optional chaining to safely get bondName or fallback
+      const bondName = bondCard?.querySelector('h3')?.innerText ?? 'Unbekanntes Wertpapier';
+
+      const email = 'berater@example.com';
+      const subject = encodeURIComponent(`Anlageberatung für ${bondName} (WKN: ${wkn})`);
+      const body = encodeURIComponent(
+        `Hallo,\n\n` +
+        `ich interessiere mich für eine Beratung zu folgendem Wertpapier:\n` +
+        `Name: ${bondName}\n` +
+        `WKN: ${wkn}\n\n` +
+        `Bitte kontaktieren Sie mich bezüglich einer Transaktion.\n\n` +
+        `Viele Grüße\n`
+      );
+
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    });
+  });
+
+
   // Event Listener for Favorite
   container.querySelectorAll(".favorite-toggle").forEach((td) => {
     td.addEventListener("click", () => {
@@ -183,8 +228,6 @@ function displayBonds(bonds: Bond[]) {
       const bond = savedValues.find((b) => b.wkn === wkn);
       if (bond) {
         updateFavorite(bond);
-
-        // Update the content of this cell only
         td.innerHTML = bond.favorit
           ? `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#eab308">
               <path d="M17.562 21.56a1 1 0 0 1-.465-.116L12 18.764l-5.097 2.68a1 1 0 0 1-1.45-1.053l.973-5.676l-4.124-4.02a1 1 0 0 1 .554-1.705l5.699-.828l2.549-5.164a1.04 1.04 0 0 1 1.793 0l2.548 5.164l5.699.828a1 1 0 0 1 .554 1.705l-4.124 4.02l.974 5.676a1 1 0 0 1-.985 1.169Z"/>

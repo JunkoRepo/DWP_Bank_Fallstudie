@@ -46,6 +46,7 @@ h1 {
 
 table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -77,6 +78,124 @@ tr:hover {
     padding: 0.5rem 1rem;
   }
 }
+
+.chart-details {
+  display: flex;
+  gap: 20px;
+  padding: 16px;
+  align-items: flex-start;
+}
+
+.chart-container {
+    flex: 1;
+}
+
+.bond-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bond-info p {
+  margin-bottom: 12px;
+}
+
+.bond-card {
+  flex:1;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+  max-width: 500px;
+}
+
+.bond-card:hover {
+  transform: scale(1.01);
+}
+
+.bond-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+}
+
+.bond-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #1a1a1a;
+}
+
+.bond-risk {
+  font-size: 0.9rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+}
+
+.bond-risk.niedrig {
+  background-color: #e0f9e4;
+  color: #267a35;
+}
+
+.bond-risk.mittel {
+  background-color: #fff5cc;
+  color: #b98c00;
+}
+
+.bond-risk.hoch {
+  background-color: #ffe5e5;
+  color: #cc1f1f;
+}
+
+.bond-details p {
+  margin: 0.3rem 0;
+  color: #333;
+}
+
+.bond-description {
+  margin-top: 1rem;
+  font-style: italic;
+  color: #555;
+}
+
+.info-button {
+  margin-top: 1rem;
+  background-color: #007acc;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+}
+
+.info-button:hover {
+  background-color: #005fa3;
+}
+
+
+.info-button {
+  padding: 8px 16px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.info-button:hover {
+  background-color: #1e40af;
+}
+
 
 .pointer{
   cursor: pointer;

@@ -7,7 +7,8 @@
       "kurs": 152.30,
       "anlagerisiko": "Hoch",
       "datum_naechste_hauptversammlung": "2025-06-15",
-      "emittent": "TechCorp AG"
+      "emittent": "TechCorp AG",
+      "beschreibung": "Technologieaktie mit starkem Wachstumspotenzial, aber erhöhter Volatilität. Geeignet für chancenorientierte Investoren."
     },
     {
       "wkn": "654321",
@@ -17,7 +18,8 @@
       "kurs": 101.40,
       "anlagerisiko": "Mittel",
       "datum_naechste_hauptversammlung": "2025-07-10",
-      "emittent": "Enterprises GmbH"
+      "emittent": "Enterprises GmbH",
+      "beschreibung": "Unternehmensanleihe mittlerer Bonität, ideal für Anleger, die stabile Erträge mit moderatem Risiko suchen."
     },
     {
       "wkn": "111111",
@@ -27,7 +29,8 @@
       "kurs": 87.20,
       "anlagerisiko": "Mittel",
       "datum_naechste_hauptversammlung": "2025-08-20",
-      "emittent": "Global Invest AG"
+      "emittent": "Global Invest AG",
+      "beschreibung": "Mischfonds mit globaler Streuung. Kombiniert Aktien- und Anleiheanteile zur Risikoreduzierung."
     },
     {
       "wkn": "222222",
@@ -37,7 +40,8 @@
       "kurs": 112.50,
       "anlagerisiko": "Mittel",
       "datum_naechste_hauptversammlung": "2025-09-12",
-      "emittent": "Energy Group"
+      "emittent": "Energy Group",
+      "beschreibung": "ETF auf Energieunternehmen. Bietet sektorales Exposure mit breiter Risikostreuung."
     },
     {
       "wkn": "333333",
@@ -47,7 +51,8 @@
       "kurs": 98.75,
       "anlagerisiko": "Hoch",
       "datum_naechste_hauptversammlung": "2025-06-30",
-      "emittent": "Pharma AG"
+      "emittent": "Pharma AG",
+      "beschreibung": "Pharmaunternehmen mit Fokus auf Forschung und Entwicklung. Potenzial für hohe Renditen, aber auch erhöhte Risiken."
     },
     {
       "wkn": "444444",
@@ -57,7 +62,8 @@
       "kurs": 100.00,
       "anlagerisiko": "Niedrig",
       "datum_naechste_hauptversammlung": "2025-09-01",
-      "emittent": "Bundesrepublik Deutschland"
+      "emittent": "Bundesrepublik Deutschland",
+      "beschreibung": "10-jährige Staatsanleihe mit hoher Sicherheit und stabiler Verzinsung. Besonders geeignet für sicherheitsorientierte Anleger."
     },
     {
       "wkn": "555555",
@@ -67,7 +73,8 @@
       "kurs": 143.80,
       "anlagerisiko": "Mittel",
       "datum_naechste_hauptversammlung": "2025-07-25",
-      "emittent": "Real Invest AG"
+      "emittent": "Real Invest AG",
+      "beschreibung": "Immobilienfonds mit Fokus auf Gewerbe- und Wohnimmobilien. Geeignet für Anleger mit Fokus auf Substanzwerte."
     },
     {
       "wkn": "666666",
@@ -77,7 +84,8 @@
       "kurs": 72.50,
       "anlagerisiko": "Mittel",
       "datum_naechste_hauptversammlung": "2025-08-15",
-      "emittent": "Consumer Group"
+      "emittent": "Consumer Group",
+      "beschreibung": "Branchen-ETF auf Konsumgüter. Stabilität durch defensive Titel mit geringerer Volatilität."
     },
     {
       "wkn": "777777",
@@ -87,7 +95,8 @@
       "kurs": 215.00,
       "anlagerisiko": "Hoch",
       "datum_naechste_hauptversammlung": "2025-06-20",
-      "emittent": "AutoMotive AG"
+      "emittent": "AutoMotive AG",
+      "beschreibung": "Aktie eines großen Automobilherstellers. Zyklischer Markt, daher für Anleger mit Risikobereitschaft geeignet."
     },
     {
       "wkn": "888888",
@@ -97,7 +106,8 @@
       "kurs": 103.20,
       "anlagerisiko": "Mittel",
       "datum_naechste_hauptversammlung": "2025-07-05",
-      "emittent": "Convertible Ltd."
+      "emittent": "Convertible Ltd.",
+      "beschreibung": "Wandelanleihe mit Option zur Aktienumwandlung. Kombiniert die Sicherheit von Anleihen mit Wachstumschancen am Aktienmarkt."
     },
     {
       "wkn": "999999",
@@ -107,7 +117,8 @@
       "kurs": 95.60,
       "anlagerisiko": "Niedrig",
       "datum_naechste_hauptversammlung": "2025-08-10",
-      "emittent": "Fixed Invest"
+      "emittent": "Fixed Invest",
+      "beschreibung": "Fonds mit Schwerpunkt auf Anleihen. Bietet stabile Erträge bei geringem Risiko – ideal für sicherheitsorientierte Anleger."
     },
     {
       "wkn": "101010",
@@ -117,7 +128,8 @@
       "kurs": 123.45,
       "anlagerisiko": "Hoch",
       "datum_naechste_hauptversammlung": "2025-09-20",
-      "emittent": "Tech Group"
+      "emittent": "Tech Group",
+      "beschreibung": "Technologie-ETF mit breiter Streuung in wachstumsstarken Unternehmen. Hohes Renditepotenzial bei entsprechender Schwankung."
     },
     {
       "wkn": "202020",
@@ -127,7 +139,8 @@
       "kurs": 67.90,
       "anlagerisiko": "Mittel",
       "datum_naechste_hauptversammlung": "2025-06-25",
-      "emittent": "Chem AG"
+      "emittent": "Chem AG",
+      "beschreibung": "Industrieaktie mit solider Basis. Eignet sich für langfristig orientierte Anleger mit mittlerer Risikobereitschaft."
     },
     {
       "wkn": "303030",
@@ -137,7 +150,8 @@
       "kurs": 110.15,
       "anlagerisiko": "Hoch",
       "datum_naechste_hauptversammlung": "2025-07-15",
-      "emittent": "High Yield Corp."
+      "emittent": "High Yield Corp.",
+      "beschreibung": "Hochzinsanleihe mit erhöhtem Risiko und überdurchschnittlicher Renditechance. Für erfahrene Anleger mit hoher Risikobereitschaft."
     },
     {
       "wkn": "404040",
@@ -147,6 +161,7 @@
       "kurs": 129.00,
       "anlagerisiko": "Hoch",
       "datum_naechste_hauptversammlung": "2025-08-05",
-      "emittent": "Growth Invest"
+      "emittent": "Growth Invest",
+      "beschreibung": "Aktienfonds mit Fokus auf Wachstumswerte. Hohes Renditepotenzial, jedoch mit erhöhtem Marktrisiko."
     }
   ]
