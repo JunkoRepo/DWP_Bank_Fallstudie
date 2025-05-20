@@ -15,5 +15,5 @@ Diese App simuliert ein sicheres Aktien-Dashboard für die Persona **Klaus Meier
 
 ## Setup
 ```bash
-cd \DWP_Bank_Fallstudie\trading-webapp\
+cd .\trading-webapp\
 npm run dev
